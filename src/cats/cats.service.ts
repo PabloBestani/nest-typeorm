@@ -1,26 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Cat } from './entities/cat.entity';
+import { Repository } from 'typeorm';
+import { v4 } from 'uuid';
 
 @Injectable()
 export class CatsService {
-  create(createCatDto: CreateCatDto) {
-    return 'This action adds a new cat';
+
+  constructor(
+    @InjectRepository(Cat)
+    private readonly catRepository: Repository<Cat>  
+  ) {}
+
+  async create(createCatDto: CreateCatDto) {
+    const newCat = this.catRepository.create({
+      id: v4(),
+      ...createCatDto
+    });
+    return await this.catRepository.save(newCat);
   }
 
-  findAll() {
-    return `This action returns all cats`;
+  async findAll() {
+    return await this.catRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} cat`;
+  async findOne(id: string) {
+    return await this.catRepository.findOneBy({id});
   }
 
-  update(id: number, updateCatDto: UpdateCatDto) {
-    return `This action updates a #${id} cat`;
+  async update(id: string, updateCatDto: UpdateCatDto) {
+    return await this.catRepository.update(id, updateCatDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} cat`;
+  async remove(id: string) {
+    return await this.catRepository.softDelete({id});
   }
 }

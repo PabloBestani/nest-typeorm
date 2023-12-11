@@ -41,6 +41,9 @@ dependencies:
   typeorm:
     specifier: ^0.3.17
     version: 0.3.17(mysql2@3.6.5)(ts-node@10.9.2)
+  uuid:
+    specifier: ^9.0.1
+    version: 9.0.1
 
 devDependencies:
   '@nestjs/cli':
@@ -5403,7 +5406,7 @@ packages:
       sha.js: 2.4.11
       ts-node: 10.9.2(@types/node@20.10.4)(typescript@5.3.3)
       tslib: 2.6.2
-      uuid: 9.0.0
+      uuid: 9.0.1
       yargs: 17.7.2
     transitivePeerDependencies:
       - supports-color
