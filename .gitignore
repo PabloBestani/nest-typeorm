@@ -37,3 +37,6 @@ lerna-debug.log*
 # DOCKER
 docker-compose.yaml
 /mysql
+
+# Environment
+.env
