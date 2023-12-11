@@ -35,7 +35,6 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # DOCKER
-docker-compose.yaml
 /mysql
 
 # Environment
