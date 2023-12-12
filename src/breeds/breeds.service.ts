@@ -1,26 +1,40 @@
 import { Injectable } from '@nestjs/common';
 import { CreateBreedDto } from './dto/create-breed.dto';
 import { UpdateBreedDto } from './dto/update-breed.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Breed } from './entities/breed.entity';
+import { Repository } from 'typeorm';
+import { v4 } from 'uuid';
 
 @Injectable()
 export class BreedsService {
-  create(createBreedDto: CreateBreedDto) {
-    return 'This action adds a new breed';
+
+  constructor(
+    @InjectRepository(Breed)
+    private readonly BreedRepository: Repository<Breed>
+  ) {}
+
+  async create(createBreedDto: CreateBreedDto) {
+    const newBreed = this.BreedRepository.create({
+      id: v4(),
+      ...createBreedDto
+    });
+    return await this.BreedRepository.save(newBreed);
   }
 
-  findAll() {
-    return `This action returns all breeds`;
+  async findAll() {
+    return await this.BreedRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} breed`;
+  async findOne(id: string) {
+    return await this.BreedRepository.findOneBy({id});
   }
 
-  update(id: number, updateBreedDto: UpdateBreedDto) {
-    return `This action updates a #${id} breed`;
+  async update(id: string, updateBreedDto: UpdateBreedDto) {
+    return await this.BreedRepository.update({id}, updateBreedDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} breed`;
+  async remove(id: string) {
+    return await this.BreedRepository.softDelete({id});
   }
 }
