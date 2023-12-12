@@ -31,10 +31,10 @@ export class BreedsService {
   }
 
   async update(id: string, updateBreedDto: UpdateBreedDto) {
-    return await this.BreedRepository.update({id}, updateBreedDto);
+    return await this.BreedRepository.update(id, updateBreedDto);
   }
 
   async remove(id: string) {
-    return await this.BreedRepository.softDelete({id});
+    return await this.BreedRepository.softDelete(id);
   }
 }
