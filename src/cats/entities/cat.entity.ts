@@ -1,5 +1,6 @@
-import { Breed } from "src/breeds/entities/breed.entity";
-import { Column, DeleteDateColumn, Entity, ManyToOne, PrimaryColumn } from "typeorm";
+import { Breed } from "../../breeds/entities/breed.entity";
+import { User } from "../../users/entities/user.entity";
+import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 
 @Entity()
 export class Cat {
@@ -18,4 +19,11 @@ export class Cat {
 
     @ManyToOne(() => Breed, (breed) => breed.id, {eager: true})
     breed: Breed;
+
+    @ManyToOne(() => User)
+    @JoinColumn({ name: 'userEmail', referencedColumnName: 'email' })
+    user: User;
+
+    @Column()
+    userEmail: string;
 }
