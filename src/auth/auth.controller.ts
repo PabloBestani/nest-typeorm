@@ -8,17 +8,11 @@ import {
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
-import { Request } from 'express';
 import { Auth } from './decorators/auth.decorator';
 import { Role } from '../common/enums/role.enum';
+import { ActiveUser } from 'src/common/decorators/active-user.decorator';
+import { ActiveUserInterface } from 'src/common/interfaces/active-user.interface';
 
-// Esto se puede extraer a un archivo interfaces
-interface RequestWithUser extends Request {
-    user: {
-        email: string,
-        role: string
-    }
-}
 
 @Controller('auth')
 export class AuthController {
@@ -36,7 +30,7 @@ export class AuthController {
 
     @Get('profile')
     @Auth(Role.USER)
-    async profile(@Req() { user }: RequestWithUser) {
+    async profile(@ActiveUser() user: ActiveUserInterface) {
         return await this.authService.profile(user.email, user.role);
     }
 

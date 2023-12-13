@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcryptjs from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
 import { ConfigService } from '@nestjs/config';
+import { ActiveUserInterface } from 'src/common/interfaces/active-user.interface';
 
 @Injectable()
 export class AuthService {
@@ -35,7 +36,7 @@ export class AuthService {
 
         // Genero un token nuevo para el usuario
         const secret = new ConfigService().get<string>('JWT_SECRET');
-        const payload = { email, role: user.role }
+        const payload: ActiveUserInterface = { email, role: user.role }
         const token = await this.jwtService.signAsync(payload, { secret });
         return {
             token,
