@@ -2,8 +2,7 @@ import {
     Body,
     Controller, 
     Post,
-    Get,
-    Req     // Puedo importar el @Request de forma abreviada para que no choque con el de Express
+    Get
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
