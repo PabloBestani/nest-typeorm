@@ -26,7 +26,7 @@ export class AuthService {
 
     async login({ email, password }: LoginDto) {
         // Chequeo que exista un usuario con ese email
-        const user = await this.usersService.findOneByEmail(email);
+        const user = await this.usersService.findByEmailWithPassword(email);
         if (!user) throw new UnauthorizedException("Invalid credentials.");
 
         // Chequeo que la password sea la correcta

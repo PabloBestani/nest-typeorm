@@ -26,6 +26,17 @@ export class UsersService {
     return await this.userRepository.findOneBy({ email });
   }
 
+  async findByEmailWithPassword(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { email },
+      select: {
+        role: true,
+        password: true
+      }
+    });
+    return user;
+  }
+
   async findAll() {
     return await this.userRepository.find();
   }
