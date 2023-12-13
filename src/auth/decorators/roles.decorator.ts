@@ -1,5 +1,6 @@
 import { SetMetadata } from "@nestjs/common";
+import { Role } from "../enums/role.enum";
 
-export const ROLES_KEY = 'roles';
+export const ROLE_KEY = 'role';
 // Seteo en la Metadata el/los roles permitidos para una determinada ruta
-export const Roles = (role: string) => SetMetadata(ROLES_KEY, role);
+export const Roles = (role: Role) => SetMetadata(ROLE_KEY, role);

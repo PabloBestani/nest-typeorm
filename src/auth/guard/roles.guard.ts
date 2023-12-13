@@ -1,6 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from '../decorators/roles.decorator';
+import { ROLE_KEY } from '../decorators/roles.decorator';
+import { Role } from '../enums/role.enum';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -10,7 +11,7 @@ export class RolesGuard implements CanActivate {
   // Funcion que admite o prohibe el acceso
   canActivate(context: ExecutionContext): boolean{
     // Extraigo de la Metadata el rol que está permitido
-    const role = this.reflector.getAllAndOverride(ROLES_KEY, [
+    const role = this.reflector.getAllAndOverride<Role>(ROLE_KEY, [
       context.getHandler(),
       context.getClass()
     ])
