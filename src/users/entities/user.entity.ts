@@ -1,3 +1,4 @@
+import { Role } from "../../common/enums/role.enum";
 import { 
     Column, 
     DeleteDateColumn, 
@@ -19,8 +20,8 @@ export class User {
     @Column({ nullable: false, select: false })
     password: string;
 
-    @Column({ default: 'user' })
-    role: string;
+    @Column({ type: 'enum', enum: Role, default: Role.USER })
+    role: Role;
 
     @DeleteDateColumn()
     deletedAt: Date;
