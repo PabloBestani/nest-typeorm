@@ -22,6 +22,9 @@ export class RolesGuard implements CanActivate {
     // Extraigo del Request el rol del usuario actual
     const { user } = context.switchToHttp().getRequest();
 
+    // Le doy acceso completo a los admin
+    if (user.role === Role.ADMIN) return true;
+    
     return role === user.role;
   }
 }

@@ -35,7 +35,7 @@ export class AuthController {
     }
 
     @Get('profile')
-    @Auth(Role.ADMIN)
+    @Auth(Role.USER)
     async profile(@Req() { user }: RequestWithUser) {
         return await this.authService.profile(user.email, user.role);
     }
