@@ -4,13 +4,23 @@ import {
     Post,
     Get,
     UseGuards,
-    Request
+    Req     // Puedo importar el @Request de forma abreviada para que no choque con el de Express
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { AuthGuard } from './guard/auth.guard';
+import { Request } from 'express';
+import { Roles } from './decorators/roles.decorator';
+import { RolesGuard } from './guard/roles.guard';
 
+// Esto se puede extraer a un archivo interfaces
+interface RequestWithUser extends Request {
+    user: {
+        email: string,
+        role: string
+    }
+}
 
 @Controller('auth')
 export class AuthController {
@@ -27,12 +37,10 @@ export class AuthController {
     }
 
     @Get('profile')
-    @UseGuards(AuthGuard)
-    profile(@Request() req) {
-        return {
-            message: 'profile',
-            user: req.user
-        };
+    @Roles('admin')     // Seteo los roles que tienen acceso a esta ruta
+    @UseGuards(AuthGuard, RolesGuard)   // Verifico que el usuario este autenticado y tenga el rol adecuado
+    async profile(@Req() { user }: RequestWithUser) {
+        return await this.authService.profile(user.email, user.role);
     }
 
 }
