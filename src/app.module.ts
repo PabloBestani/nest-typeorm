@@ -18,6 +18,15 @@ import { AuthModule } from './auth/auth.module';
       port: +process.env.POSTGRES_PORT,
       autoLoadEntities: true,
       synchronize: true, // QUITAR ESTE al llevarlo a produccion
+      ssl: process.env.POSTGRES_SSL  === "true",
+      extra: {
+        ssl:
+          process.env.POSTGRES_SSL === "true"
+          ? {
+            rejectUnauthorized: false,
+          }
+          : null,
+      },
     }),
     CatsModule,
     BreedsModule,
