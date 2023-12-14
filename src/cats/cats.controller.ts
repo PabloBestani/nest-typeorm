@@ -33,7 +33,7 @@ export class CatsController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.catsService.remove(id);
+  remove(@Param('id') id: string, @ActiveUser() user: ActiveUserInterface) {
+    return this.catsService.remove(id, user);
   }
 }

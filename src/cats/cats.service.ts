@@ -75,7 +75,9 @@ export class CatsService {
     return await this.catRepository.update(id, catData);
   }
 
-  async remove(id: string) {
-    return await this.catRepository.softDelete({id});
+  async remove(id: string, user: ActiveUserInterface) {
+    // Busco el gato en cuestion para validar permisos de edicion
+    this.findOne(id, user);
+    return await this.catRepository.softDelete({ id });
   }
 }
