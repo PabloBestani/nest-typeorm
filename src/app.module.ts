@@ -17,7 +17,7 @@ import { AuthModule } from './auth/auth.module';
       host: process.env.POSTGRES_HOST,
       port: +process.env.POSTGRES_PORT,
       autoLoadEntities: true,
-      synchronize: true, // QUITAR ESTE al llevarlo a produccion
+      synchronize: false, // SETEAR EN FALSE al llevarlo a produccion
       ssl: process.env.POSTGRES_SSL  === "true",
       extra: {
         ssl:

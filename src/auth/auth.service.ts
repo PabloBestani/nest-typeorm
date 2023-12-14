@@ -4,7 +4,6 @@ import { RegisterDto } from './dto/register.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as bcryptjs from 'bcryptjs';
 import { LoginDto } from './dto/login.dto';
-import { ConfigService } from '@nestjs/config';
 import { ActiveUserInterface } from 'src/common/interfaces/active-user.interface';
 
 @Injectable()
@@ -35,9 +34,9 @@ export class AuthService {
         if (!isPasswordValid) throw new UnauthorizedException("Invalid credentials.");
 
         // Genero un token nuevo para el usuario
-        const secret = new ConfigService().get<string>('JWT_SECRET');
+        // const secret = new ConfigService().get<string>('JWT_SECRET');
         const payload: ActiveUserInterface = { email, role: user.role }
-        const token = await this.jwtService.signAsync(payload, { secret });
+        const token = await this.jwtService.signAsync(payload);
         return {
             token,
             email
