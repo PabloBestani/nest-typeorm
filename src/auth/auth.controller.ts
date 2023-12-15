@@ -11,8 +11,10 @@ import { Auth } from './decorators/auth.decorator';
 import { Role } from '../common/enums/role.enum';
 import { ActiveUser } from 'src/common/decorators/active-user.decorator';
 import { ActiveUserInterface } from 'src/common/interfaces/active-user.interface';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 
+@ApiTags("auth")
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
@@ -27,6 +29,7 @@ export class AuthController {
         return this.authService.login(loginDto);
     }
 
+    @ApiBearerAuth()
     @Get('profile')
     @Auth(Role.USER)
     async profile(@ActiveUser() user: ActiveUserInterface) {
